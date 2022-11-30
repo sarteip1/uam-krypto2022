@@ -20,8 +20,6 @@ import java.util.Arrays;
 
 public class Alice {
 
-    public static final String ID = "Alice";
-
     private static final Communitation keyDistributionCenterCom = new Communitation("localhost", KeyDistributionCenter.PORT);
     private static final Communitation bobCom = new Communitation("localhost", Bob.PORT);
 
@@ -37,15 +35,15 @@ public class Alice {
 
             AliceKeys aliceKeys = new AliceKeys();
 
-            MasterKeyRequest mkReq = new MasterKeyRequest(RaNonce, ID, Bob.ID);
-            keyDistributionCenterCom.getOutSock().writeObject(mkReq);
+            MasterKeyRequest mKReq = new MasterKeyRequest(RaNonce);
+            keyDistributionCenterCom.getOutSock().writeObject(mKReq);
             keyDistributionCenterCom.getOutSock().flush();
 
             RawBytes raw = (RawBytes) keyDistributionCenterCom.getInSock().readObject();
             byte[] decrypted = CipherUtils.decrypt(raw.getRawData(), aliceKeys);
             MasterKeyResponse kdcResponse = SerializationUtils.deserialize(decrypted);
 
-            if (!Bob.ID.equals(kdcResponse.getB())) {
+            if (!Bob.ID.equals(kdcResponse.getClientId())) {
                 keyDistributionCenterCom.getOutSock().close();
                 keyDistributionCenterCom.getInSock().close();
                 keyDistributionCenterSocket.close();
@@ -78,7 +76,7 @@ public class Alice {
             RawBytes challenge = (RawBytes) bobCom.getInSock().readObject();
             BigInteger RbNonce = new BigInteger(CipherUtils.decrypt(challenge.getRawData(), masterKey));
 
-            BigInteger response = RbNonce.subtract(new BigInteger(String.valueOf(1)));
+            BigInteger response = RbNonce.subtract(BigInteger.valueOf(1));
             RawBytes data = new RawBytes(CipherUtils.encrypt(response.toByteArray(), masterKey));
             bobCom.getOutSock().writeObject(data);
 

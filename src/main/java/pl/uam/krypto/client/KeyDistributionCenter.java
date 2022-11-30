@@ -46,7 +46,7 @@ public class KeyDistributionCenter {
             MasterKeyRequest masterKeyRequest = getMasterKey(communitation.getInSock());
             Key masterKey = KeyManager.generateKey();
 
-            Agreement agreement = new Agreement(Alice.ID, masterKey);
+            Agreement agreement = new Agreement(masterKey);
             byte[] encryptedAgreement = CipherUtils.encrypt(agreement, bobKeys);
 
             MasterKeyResponse response =

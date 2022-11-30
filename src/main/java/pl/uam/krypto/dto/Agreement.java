@@ -10,7 +10,6 @@ import java.security.Key;
 @AllArgsConstructor
 public class Agreement implements Serializable {
 
-    private String A;
     private Key key;
 
 }

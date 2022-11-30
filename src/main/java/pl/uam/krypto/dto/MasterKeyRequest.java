@@ -10,7 +10,4 @@ import java.io.Serializable;
 public class MasterKeyRequest implements Serializable {
 
     private byte[] nonce;
-    private String idA;
-    private String idB;
-
 }

@@ -12,7 +12,7 @@ public class MasterKeyResponse implements Serializable {
 
     private byte[] nonce;
     private Key key;
-    private String B;
+    private String clientId;
     private byte[] encryptedAgreement;
 
 }
