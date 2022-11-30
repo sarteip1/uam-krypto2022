@@ -14,7 +14,7 @@ public class MessageServices {
 
     public static void messageService(Key masterKey, ObjectOutputStream outSock) throws Exception {
         System.out.print("Message: ");
-        String msg = scanner.next();
+        String msg = scanner.nextLine();
 
         Key sessionKey = KeyManager.generateKey();
 
