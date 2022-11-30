@@ -20,8 +20,8 @@ import java.util.Arrays;
 
 public class Alice {
 
-    private static final Communitation keyDistributionCenterCom = new Communitation("localhost", KeyDistributionCenter.PORT);
-    private static final Communitation bobCom = new Communitation("localhost", Bob.PORT);
+    private static final Communitation keyDistributionCenterCom = new Communitation("127.0.1.1", KeyDistributionCenter.PORT);
+    private static final Communitation bobCom = new Communitation("127.0.1.1", Bob.PORT);
 
     public static void main(String[] args) {
         byte[] RaNonce = NumberUtils.getNonce();

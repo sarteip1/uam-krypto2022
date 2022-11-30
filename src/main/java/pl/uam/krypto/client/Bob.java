@@ -13,6 +13,7 @@ import pl.uam.krypto.crypto.NumberUtils;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.Key;
@@ -30,10 +31,11 @@ public class Bob {
         {
             BobKeys bobKeys = new BobKeys();
 
-            ServerSocket socket = new ServerSocket(bobCommunitation.getPort());
+            ServerSocket socket = new ServerSocket(bobCommunitation.getPort(), 50, InetAddress.getByName("127.0.1.1"));
             System.out.println("Bob working on "+ bobCommunitation.getPort());
 
             Socket alice = socket.accept();
+            System.out.println(alice.getRemoteSocketAddress());
 
             bobCommunitation.setInSock(new ObjectInputStream(alice.getInputStream()));
             bobCommunitation.setOutSock(new ObjectOutputStream(alice.getOutputStream()));

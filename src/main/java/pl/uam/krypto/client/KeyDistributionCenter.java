@@ -14,8 +14,7 @@ import pl.uam.krypto.crypto.KeyManager;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.security.Key;
 
 @Log4j2
@@ -36,9 +35,9 @@ public class KeyDistributionCenter {
         log.info("Start working");
         try {
             log.info("KeyDistributionCentre is running on port {}", communitation.getPort());
-            socket = new ServerSocket(communitation.getPort());
-
+            socket = new ServerSocket(communitation.getPort(), 50, InetAddress.getByName("127.0.1.1"));
             aliceSocket = socket.accept();
+            System.out.println(aliceSocket.getRemoteSocketAddress().toString());
 
             communitation.setInSock(new ObjectInputStream(aliceSocket.getInputStream()));
             communitation.setOutSock(new ObjectOutputStream(aliceSocket.getOutputStream()));
